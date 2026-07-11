@@ -32,7 +32,9 @@ mongoose.connect
     ).catch((error) =>
         console.log('error')
     )
-
+app.get("/",(req,res)=>{
+    res.send("Hello from server")
+})
 
 // uses of routes
 
