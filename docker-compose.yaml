@@ -15,7 +15,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     container_name: backend
-    restart: always
+    restart: unless-stopped
     env_file:
       - ./server/.env
     ports:
@@ -28,11 +28,11 @@ services:
       context: ./client
       dockerfile: Dockerfile
     container_name: frontend
+    env_file:
+      - ./client/.env
     restart: always
     ports:
       - "80:80"
-    depends_on:
-      - backend
 
 volumes:
   mongo_data:

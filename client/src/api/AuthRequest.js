@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: `${process.env.BASE_URL}` });
+const API = axios.create({ baseURL: process.env.VITE_APP_API_URL });
+
 
 export const logIn = (formData) => API.post('/auth/login', formData); 
 

@@ -1,0 +1,11 @@
+/terraform/terraform.tfstate
+/terraform/terraform.tfstate.backup
+
+/terraform/.terraform
+
+/terraform/terraform.tfvars
+/terraform/terraform.tfvars.json
+/terraform/.terraform
+/terraform/.terraform.lock.hcl
+/terraform/socialmediakey
+/terraform/socialmediakey.pub
