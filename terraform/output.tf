@@ -4,10 +4,10 @@ output "instance_public_ip" {
 output "instance_public_dns" {
     value = aws_instance.social-instance.public_dns
 }
-output "instance_public_ip" {
+output "kube_public_ip" {
     value = aws_instance.social-kube.public_ip
 }
-output "instance_public_dns" {
+output "kube_public_dns" {
     value = aws_instance.social-kube.public_dns
 }
 
