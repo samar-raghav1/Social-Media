@@ -76,5 +76,45 @@ resource "aws_instance" "social-instance" {
         Name = "social-instance"
     }
 }
+resource "aws_instance" "social-kube" {
+    ami           = "ami-0b6d9d3d33ba97d99" # ubuntu 22.04
+    instance_type = "t3.small"
+    subnet_id     = aws_subnet.social-subnet.id
+    key_name      = aws_key_pair.social-key.key_name
+    associate_public_ip_address = true 
+    vpc_security_group_ids = [aws_security_group.social-sg.id]
+    availability_zone = data.aws_availability_zones.available.names[0]
+    root_block_device {
+        volume_size = 35
+        volume_type = "gp2"
+    }
 
+    tags = {
+        Name = "social-kube"
+    }
+}
 
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "20.8.4"
+
+  cluster_name    = "social-eks-cluster"
+  cluster_version = "1.29"
+  subnet_ids      = aws_subnet.social-subnet[*].id
+  vpc_id          = aws_vpc.social-vpc.id
+
+  # IAM roles for cluster
+  cluster_endpoint_public_access = true
+
+  # Node group
+  eks_managed_node_groups = {
+    default = {
+      min_size     = 1
+      max_size     = 3
+      desired_size = 2
+
+      instance_types = ["t3.small"]
+      capacity_type  = "ON_DEMAND"
+    }
+  }
+}
